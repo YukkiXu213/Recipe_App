@@ -1,21 +1,25 @@
-const NavBar = ({ activePage, setActivePage }) => {
+import { NavLink } from 'react-router-dom'
+
+const NavBar = ({ onNavigate }) => {
     const links = [
-        { id: "dashboard", label: "Dashboard", icon: "/house.png" },
-        { id: "saved", label: "Saved Recipes", icon: "/heart.png" },
-        { id: "about", label: "About", icon: "/information.png" },
+        { path: "/", label: "Dashboard", icon: "/house.png" },
+        { path: "/saved", label: "Saved Recipes", icon: "/heart.png" },
+        { path: "/about", label: "About", icon: "/information.png" },
     ]
 
     return (
         <nav className="navbar">
             {links.map((link) => (
-                <button
-                    key={link.id}
-                    className={`nav-link ${activePage === link.id ? "active" : ""}`}
-                    onClick={() => setActivePage(link.id)}
+                <NavLink
+                    key={link.path}
+                    to={link.path}
+                    end
+                    className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+                    onClick={() => onNavigate(link.path)}
                 >
                     <img src={link.icon} alt="" className="nav-icon" />
                     {link.label}
-                </button>
+                </NavLink>
             ))}
         </nav>
     )
